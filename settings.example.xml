@@ -1,0 +1,72 @@
+<settings>
+  <profiles>
+    <profile>
+      <id>hiroya</id>
+      <activation>
+	<activeByDefault/>
+      </activation>
+      <properties>
+	<signingOrganizationName>Chiba University of Commerce</signingOrganizationName>
+	<signingOrganizationURL>http://www.cuc.ac.jp/</signingOrganizationURL>
+	<signedBy>Hiroya KUBO</signedBy>
+	<sign.storepass>L401</sign.storepass>
+	<!--
+	    <sign.keystore>c:\verisign-cuc-2009.p12</sign.keystore>
+	    -->
+	<sign.keystore>/Users/hiroya/verisign-cuc-2009.p12</sign.keystore>
+	<sign.storetype>pkcs12</sign.storetype>
+	<sign.alias>chiba university of commerce の verisign, inc. id</sign.alias>
+
+	<bin.rsync>/opt/local/bin/rsync</bin.rsync>
+	<bin.ssh>/usr/bin/ssh</bin.ssh>
+	<deploy.date>2011/12/04</deploy.date>
+	<deploy.username>hiroya</deploy.username>
+	<deploy.hostname>sqs2.net</deploy.hostname>
+	<deploy.hostdir>/var/www/${deploy.date}</deploy.hostdir>
+	<!-- <izpack.path>/usr/local/izpack</izpack.path> -->
+	<!-- <izpack.path>c:\Program Files\Izpack</izpack.path>-->
+      </properties>
+    </profile>
+    
+    <profile>
+     <id>jai-enabled</id>
+     <activation>
+       <os>
+         <family>Windows</family>
+       </os>
+     </activation>
+     <dependencies>
+		<dependency>
+			<groupId>javax.media</groupId>
+			<artifactId>jai_core</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.media</groupId>
+			<artifactId>jai_codec</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.media</groupId>
+			<artifactId>jai_imageio</artifactId>
+			<version>1.1</version>
+		</dependency>
+	  </dependencies>
+	</profile>
+
+  </profiles>
+
+  <servers>
+    <server>
+      <id>scp-repository</id>
+      <username>bool</username>
+      <privateKey>/Users/hiroya/.ssh/id_rsa</privateKey>
+      <passphrase></passphrase>
+      <filePermissions>664</filePermissions>
+      <directoryPermissions>775</directoryPermissions>
+    </server>
+  </servers>
+  
+</settings>

@@ -1,0 +1,95 @@
+/**
+
+  PDFBookmarkToSQMTranslator.java
+
+  Copyright 2004-2007 KUBO Hiroya (hiroya@cuc.ac.jp).
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy
+  of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations
+  under the License.
+ */
+
+package net.sqs2.omr.master.pdfbookmark;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.Map;
+
+import net.sqs2.omr.base.MarkReaderJarURIContext;
+import net.sqs2.omr.master.InvalidPageMasterException;
+import net.sqs2.translator.ParamEntry;
+import net.sqs2.translator.Translator;
+import net.sqs2.translator.TranslatorException;
+import net.sqs2.translator.StreamTranslatorSource;
+import net.sqs2.translator.StreamTranslatorSourceBean;
+import net.sqs2.translator.XSLTranslator;
+
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
+public class PDFBookmarkToSQMTranslator implements Translator {
+
+	private int numPages = -1;
+	private PDFtoBookmarkTranslator pdfToBookmarkTranslator;
+	private BookmarkToSQMTranslator bookmarkToSQMTranslator;
+	private static final String bookmark2sqm_xsl_file = "bookmark2svg/bookmark.xsl";
+
+	public PDFBookmarkToSQMTranslator() throws TranslatorException {
+		this.pdfToBookmarkTranslator = new PDFtoBookmarkTranslator();
+		String uri = MarkReaderJarURIContext.getXSLTBaseURI();
+		this.bookmarkToSQMTranslator = new BookmarkToSQMTranslator(uri, bookmark2sqm_xsl_file.split(" "), null);
+	}
+
+	@Override
+	public void translate(StreamTranslatorSource source,
+			OutputStream sqmOutputStream) throws TranslatorException,
+			IOException {
+	        try {
+			final ByteArrayOutputStream bookmarkOutputStream = new ByteArrayOutputStream(65536);
+			this.pdfToBookmarkTranslator.translate(source, bookmarkOutputStream);
+			this.numPages = this.pdfToBookmarkTranslator.getNumPages();
+			this.bookmarkToSQMTranslator.setNumPages(this.numPages);
+			final byte[] bytes = bookmarkOutputStream.toByteArray();
+			if (bytes.length == 0) {
+				throw new InvalidPageMasterException();
+			}
+			//final ByteArrayInputStream bookmarkInputStream = new ByteArrayInputStream(bytes);
+			final StreamTranslatorSourceBean bookmarkSource = new StreamTranslatorSourceBean(source.getSystemId(), bytes, null);
+			// Copy system id..
+			bookmarkSource.setSystemId(source.getSystemId());
+			
+			this.bookmarkToSQMTranslator.translate(bookmarkSource, sqmOutputStream);
+			sqmOutputStream.flush();
+
+		} catch (TranslatorException ex) {
+			throw new InvalidPageMasterException();
+		} catch (IOException ex) {
+			throw new InvalidPageMasterException();
+		}
+	}
+	    
+
+	public int getNumPages() {
+		return this.numPages;
+	}
+
+	@Override
+	public InputStream translate(StreamTranslatorSource source)
+			throws TranslatorException, IOException {
+		PipedOutputStream pipedOut = new PipedOutputStream();
+		PipedInputStream ipipedIn = new PipedInputStream(pipedOut);
+		translate(source, pipedOut);
+		return ipipedIn;
+	}
+}
