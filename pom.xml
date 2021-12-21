@@ -16,18 +16,19 @@
   limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sqs2</groupId>
 	<artifactId>MarkReader</artifactId>
 	<packaging>jar</packaging>
 	<name>SQS MarkReader</name>
-	<version>2.1.3-SNAPSHOT</version>
+	<version>2.1.4-SNAPSHOT</version>
 
 	<description>SQS MarkReader is an OMR processor.</description>
-	<url>http://dev.sqs2.net/projects/sqs-editor</url>
+	<url>https://dev.sqs2.net/projects/sqs-editor</url>
 	<inceptionYear>2003</inceptionYear>
+
 
 	<organization>
 		<name>SQS Development Project</name>
@@ -39,7 +40,7 @@
 			<name>Hiroya KUBO</name>
 			<email>hiroya@cuc.ac.jp</email>
 			<organization>Chiba University of Commerce</organization>
-			<organizationUrl>http://www.cuc.ac.jp/</organizationUrl>
+			<organizationUrl>https://www.cuc.ac.jp/</organizationUrl>
 			<roles>
 				<role>Project Administrator</role>
 				<role>Developer</role>
@@ -51,7 +52,7 @@
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -66,14 +67,14 @@
 		<repository>
 			<id>sqs2.net</id>
 			<name>SQS Project Repository</name>
-			<url>http://mvnrepository.sqs2.net/artifact</url>
+			<url>https://mvnrepository.sqs2.net/artifact</url>
 		</repository>
 	</repositories>
 	
 	<pluginRepositories>
 		<pluginRepository>
 			<id>codehaus repository</id>
-			<url>http://repository.codehaus.org/</url>
+			<url>https://repository.codehaus.org/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -191,51 +192,6 @@
         </executions>
       </plugin>
 
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>3.0-beta-2</version>
-            <configuration>
-              <reportPlugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-javadoc-plugin</artifactId>
-                  <version>2.7</version>
-                </plugin>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-jxr-plugin</artifactId>
-                  <version>2.1</version>
-                  <configuration>
-                    <aggregate>true</aggregate>
-                  </configuration>
-                </plugin>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-surefire-report-plugin</artifactId>
-                  <version>2.6</version>
-                </plugin>
-                <plugin>
-                  <groupId>org.codehaus.mojo</groupId>
-                  <artifactId>cobertura-maven-plugin</artifactId>
-                  <version>2.4</version>
-                  <configuration>
-                    <formats>
-                      <format>xml</format>
-                      <format>html</format>
-                    </formats>
-                  </configuration>
-                </plugin>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-checkstyle-plugin</artifactId>
-                  <version>2.6</version>
-                </plugin>
-              </reportPlugins>
-            </configuration>
-          </plugin>
-
 <!--
 <plugin>
 <groupId>org.apache.maven.plugins</groupId>
@@ -293,7 +249,6 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.4.3</version>
 				<configuration>
-					<phase>compile</phase>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -303,8 +258,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>11</source>
+					<target>11</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -317,22 +272,12 @@
 					 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1</version>
-				<configuration>
-					<mainClass>${main.class}</mainClass>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
-				<version>1.1.1</version>
+				<version>1.7</version>
 				<configuration>
 					<assembleDirectory>${project.build.directory}/${project.artifactId}
 					</assembleDirectory>
 					<extraJvmArguments>-Xmx${maxHeapSize}</extraJvmArguments>
-					<plathomes>all</plathomes>
 					<showConsoleWindow>false</showConsoleWindow>
 					<programs>
 						<program>
@@ -342,19 +287,15 @@
 					</programs>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.3.0</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-							<mainClass>${main.class}</mainClass>
-						</transformer>
-					</transformers>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -372,129 +313,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>webstart-maven-plugin</artifactId>
-				<version>1.0-beta-3</version>
 
-				<executions>
-				</executions>
-
-				<configuration>
-					<spec>1.0+</spec>
-					<dependencies>
-						<includes>
-							<include>net.sqs2:sqs-util</include>
-							<include>org.mortbay.jetty:jetty</include>
-							<include>org.mortbay.jetty:jetty-util</include>
-							<include>org.mortbay.jetty:servlet-api-2.5</include>
-							<include>xalan:xalan</include>
-							<include>org.apache.pdfbox:pdfbox</include>
-							<include>log4j:log4j</include>
-							<include>logkit:logkit</include>
-							<include>com.lowagie:itext</include>
-							<include>avalon-framework:avalon-framework-api</include>
-							<include>avalon-framework:avalon-framework-impl</include>
-							<include>org.apache.xmlbeans:xmlbeans</include>
-							<include>org.apache.poi:poi</include>
-							<include>org.apache.poi:poi-ooxml</include>
-							<include>org.apache.poi:poi-ooxml-schemas</include>
-							<include>commons-collections:commons-collections</include>
-							<include>net.sourceforge.collections:collections-generic</include>
-							<include>commons-logging:commons-logging</include>
-							<include>commons-lang:commons-lang</include>
-							<include>commons-codec:commons-codec</include>
-							<include>commons-digester:commons-digester</include>
-							<include>commons-beanutils:commons-beanutils</include>
-							<include>commons-io:commons-io</include>
-							<include>xerces:xercesImpl</include>
-							<include>jfree:jfreechart</include>
-							<include>jfree:jcommon</include>
-							<include>org.freemarker:freemarker</include>
-							<include>oro:oro</include>
-							<include>xalan:serializer</include>
-							<include>org.apache.xmlgraphics:xmlgraphics-commons</include>
-							<include>xml-resolver:xml-resolver</include>
-							<!-- <include>com.google.code.guice:guice</include> -->
-						</includes>
-					</dependencies>
-
-					<jnlp>
-						<version>1.0+</version>
-						<inputTemplate>src/main/jnlp/jnlp_template.vm</inputTemplate>
-						<outputFile>${project.artifactId}.jnlp
-						</outputFile>
-						<mainClass>${main.class}</mainClass>
-					</jnlp>
-
-					<sign>
-						<keystore>${sign.keystore}</keystore>
-						<keypass />
-						<storepass>${sign.storepass}</storepass>
-						<storetype>${sign.storetype}</storetype>
-						<alias>${sign.alias}</alias>
-						<verify>false</verify>
-					</sign>
-
-					<allPermissions>true</allPermissions>
-					<offlineAllowed>true</offlineAllowed>
-					<usejnlpservlet>false</usejnlpservlet>
-					<verbose>false</verbose>
-
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.3</version>
-				<executions>
-					<execution>
-						<id>ant sources</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<property name="jnlp.dir" value="target/jnlp" />
-								<property name="icon.dir" value="src/main/resources/image" />
-								<copy file="${icon.dir}/${icon}" tofile="${jnlp.dir}/${icon}" />
-								<copy file="${licenseFile}" tofile="${jnlp.dir}/${licenseFile}" />
-							</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>rsync</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<property name="RSYNC" value="${bin.rsync}" />
-								<property name="SSH" value="${bin.ssh}" />
-								<property name="jnlp.dir" value="target/jnlp" />
-								<property name="LOGNAME" value="${deploy.username}" />
-								<property name="HOST" value="${deploy.hostname}" />
-								<property name="WEBAPP.dir" value="${deply.hostdir}" />
-								<echo message="${SSH} ${LOGNAME}@${HOST} mkdir -p ${WEBAPP.dir}" />
-								<exec executable="${SSH}">
-									<arg line="${LOGNAME}@${HOST} mkdir -p ${WEBAPP.dir}" />
-								</exec>
-								<echo
-									message="${RSYNC} -rR -E -e ${SSH} ${jnlp.dir} ${LOGNAME}@${HOST}:${WEBAPP.dir}" />
-								<exec executable="${RSYNC}" dir="${basedir}/${jnlp.dir}">
-									<arg line="-rR -E -e ${SSH} . ${LOGNAME}@${HOST}:${WEBAPP.dir}" />
-								</exec>
-								<exec executable="${SSH}">
-									<arg line="${LOGNAME}@${HOST} chmod -R a+r ${WEBAPP.dir}" />
-								</exec>
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 		
 		<extensions>
@@ -508,16 +327,17 @@
 
 
 	<dependencies>
+		<!--
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.6.4</version>
+			<version>1.7.32</version>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.9.8</version>
+			<version>7.4.0</version>
 			<scope>test</scope>
 		</dependency>
 <!-- 
@@ -532,69 +352,57 @@
 		<dependency>
 			<groupId>net.sqs2</groupId>
 			<artifactId>sqs-util</artifactId>
-			<version>1.5.1</version>
+			<version>1.5.2</version>
 		</dependency>
-
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
+			<version>2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.7.0</version>
+			<version>20030211.134440</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
-			<version>1.8</version>
+			<version>2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>2.1.7</version>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13.2</version>
 		</dependency>
 		<dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework-api</artifactId>
-			<version>4.2.0</version>
+			<version>4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-			<version>4.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>logkit</groupId>
-			<artifactId>logkit</artifactId>
-			<version>1.0.1</version>
+			<version>4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.0.9</version>
+			<version>1.0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jcommon</artifactId>
-			<version>1.0.12</version>
+			<version>1.0.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.15</version>
+			<version>2.3.31</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>oro</groupId>
@@ -604,34 +412,34 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.12</version>
+			<version>5.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.12</version>
+			<version>5.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>3.12</version>
+			<version>4.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
-			<version>4.0.1</version>
+			<version>4.4.14</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore-nio</artifactId>
-			<version>4.0.1</version>
+			<version>4.4.14</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
+			<version>4.5.13</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -644,7 +452,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
-			<version>1.0</version>
+			<version>1.21</version>
 		</dependency>
 
 		<dependency>
@@ -656,22 +464,10 @@
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>1.2</version>
+			<version>20040117.000000</version>
 		</dependency>
-		
-	</dependencies>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<charset>UTF-8</charset>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
+	</dependencies>
 
 	<properties>
 		<license>Apache License, Version 2.0</license>
@@ -680,6 +476,8 @@
 		<icon>omr.png</icon>
 		<maxHeapSize>1024m</maxHeapSize>
 		<group>SQS</group>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
 </project>
